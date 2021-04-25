@@ -1,0 +1,21 @@
+<web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://XMLNS.jcp.org/xml/ns/javaee 
+   http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+
+  <display-name>WeLearn</display-name>
+  <filter>
+  	<description>
+  	</description>
+  	<display-name>SessionCheckFilter</display-name>
+  	<filter-name>SessionCheckFilter</filter-name>
+  	<filter-class>com.welearn.filters.SessionCheckFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>SessionCheckFilter</filter-name>
+  	<url-pattern>/SessionCheckFilter</url-pattern>
+  </filter-mapping>
+
+	
+</web-app>
+
