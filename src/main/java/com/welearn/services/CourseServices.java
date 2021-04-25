@@ -40,7 +40,7 @@ public class CourseServices extends JdbcDaoSupport implements CourseInterface {
 		return null;
 	}
 	
-	public boolean addCourse(String name,String price,String description ,String chapters) {
+	public boolean addCourse(String name,String price,String description ,String chapters, String email) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			md.update(name.getBytes());
@@ -48,7 +48,7 @@ public class CourseServices extends JdbcDaoSupport implements CourseInterface {
 			String hashCourseName = hash.toString(16);
 			String sql = "INSERT INTO `welearn`.`courses` (`courseId`, `courseName`, `courseDescription`, `chapters`, `coursePrice`, `created_by`) VALUES (?,?,?,?,?,?);\r\n"
 					+ ";";
-			Object[] params = new Object[] {hashCourseName,name,description,chapters,price,"100"};
+			Object[] params = new Object[] {hashCourseName,name,description,chapters,price,email};
 			int addCourse = this.getJdbcTemplate().update(sql, params);
 			if(addCourse!=0) {
 				return true;

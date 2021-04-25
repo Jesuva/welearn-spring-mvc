@@ -57,13 +57,15 @@ public class CourseController {
 		
 		
 		try {
+			HttpSession session = req.getSession(false);
 			String name = req.getParameter("courseName");
 			String price = req.getParameter("price");
 			String chapters = req.getParameter("chapters");
-			String description = req.getParameter("courseDescription");			
+			String description = req.getParameter("courseDescription");		
+			String email = (String) session.getAttribute("email");
 			boolean isNameAvailable = courseinterface.checkCourseName(name);
 			if(isNameAvailable==true) {
-				boolean isAdded = courseinterface.addCourse(name, price, description, chapters);
+				boolean isAdded = courseinterface.addCourse(name, price, description, chapters, email);
 				if(isAdded) {
 					
 					ModelAndView mv = new ModelAndView("redirect:/user/add-course-success");
