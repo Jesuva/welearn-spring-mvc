@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 import javax.swing.tree.RowMapper;
@@ -25,7 +26,8 @@ import com.welearn.model.User;
 
 @Service
 public class UserDao extends JdbcDaoSupport implements UserInterface {
-	 
+	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
 	 @Autowired
 	    public UserDao(DataSource datasource) {
 	        this.setDataSource(datasource);
@@ -46,11 +48,9 @@ public class UserDao extends JdbcDaoSupport implements UserInterface {
 		        Login userInfo = this.getJdbcTemplate().queryForObject(sql, params, mapper);
 	            return userInfo;
 			} 
-		 	catch (EmptyResultDataAccessException e) {
-	            return null;
-	        }		 	
+		 			 	
 		 	catch (Exception e) {
-				e.printStackTrace();
+				logger.warning(e.getMessage());
 				return null;
 			}
 		 	 
@@ -71,7 +71,7 @@ public class UserDao extends JdbcDaoSupport implements UserInterface {
 			 int userInfo = this.getJdbcTemplate().update(sql, params);
 		 }
 		 catch(Exception e) {
-			 e.printStackTrace();
+			 logger.warning(e.getMessage());
 		 }
 		   
 	 }
@@ -90,7 +90,7 @@ public class UserDao extends JdbcDaoSupport implements UserInterface {
 			
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			logger.warning(e.getMessage());
 		}
 		
 		return false;

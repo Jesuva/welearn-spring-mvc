@@ -3,6 +3,7 @@ package com.welearn.services;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
@@ -19,7 +20,8 @@ import com.welearn.model.Login;
 
 @Service
 public class CourseServices extends JdbcDaoSupport implements CourseInterface {
-	
+	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
 	@Autowired
     public CourseServices (DataSource datasource) {
         this.setDataSource(datasource);
@@ -35,7 +37,7 @@ public class CourseServices extends JdbcDaoSupport implements CourseInterface {
 			
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			logger.warning(e.getMessage());
 		}
 		return null;
 	}
@@ -46,9 +48,9 @@ public class CourseServices extends JdbcDaoSupport implements CourseInterface {
 			md.update(name.getBytes());
 			BigInteger hash = new BigInteger(1,md.digest());
 			String hashCourseName = hash.toString(16);
-			String sql = "INSERT INTO `welearn`.`courses` (`courseId`, `courseName`, `courseDescription`, `chapters`, `coursePrice`, `created_by`) VALUES (?,?,?,?,?,?);\r\n"
+			String sql = "INSERT INTO `welearn`.`courses` (`courseName`, `courseDescription`, `chapters`, `coursePrice`, `created_by`) VALUES (?,?,?,?,?);\r\n"
 					+ ";";
-			Object[] params = new Object[] {hashCourseName,name,description,chapters,price,email};
+			Object[] params = new Object[] {name,description,chapters,price,email};
 			int addCourse = this.getJdbcTemplate().update(sql, params);
 			if(addCourse!=0) {
 				return true;
@@ -56,7 +58,7 @@ public class CourseServices extends JdbcDaoSupport implements CourseInterface {
 			return false;
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			logger.warning(e.getMessage());
 			return false;
 		}
 	}

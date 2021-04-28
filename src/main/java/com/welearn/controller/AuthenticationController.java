@@ -1,8 +1,16 @@
 package com.welearn.controller;
 
 import java.io.IOException;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.util.regex.Pattern;
 
+import javax.annotation.PostConstruct;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,17 +23,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.ContextLoader;
 import org.springframework.web.servlet.ModelAndView;
 import com.welearn.dao.UserInterface;
+import com.welearn.AppLogger;
 import com.welearn.model.Login;
 import com.welearn.model.User;
 
 import jakarta.validation.Valid;
+import jdk.internal.org.jline.utils.Log;
 @Controller
 public class AuthenticationController {
-
+	
+	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	AppLogger applog = new AppLogger(); 
 	@Autowired
-	private UserInterface userinterface;
+	private UserInterface userInterface;
 	
 	@GetMapping("/")
 	public ModelAndView home() {
@@ -43,20 +56,21 @@ public class AuthenticationController {
 	
 	@PostMapping("/login")
 	public ModelAndView login(@RequestParam("userMail") String email,@RequestParam("userPassword") String password,HttpServletRequest request ) {
-		Login userlogin = userinterface.findUser(email,password);
+		Login userlogin = userInterface.findUser(email,password);
 		ModelAndView mv = new ModelAndView();
 		mv.clear();
 		if(userlogin!=null) {
 			HttpSession session =request.getSession();
 			session.setAttribute("name",userlogin.getName());
 			session.setAttribute("email", userlogin.getEmail());
-			
+			logger.info("User Logged In");
 			return new ModelAndView("redirect:/user/enrollcourse");
 			
 		}
 		else {
 			mv.setViewName("index");
 			mv.addObject("loginError","Invalid Credentials!");
+			logger.warning("Invalid User Credentials");
 			return mv;
 		}
 		
@@ -67,6 +81,7 @@ public class AuthenticationController {
 		model.addAttribute("user", new User());
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("signup");
+		logger.info("Display Signup Page");
 		return mv;
 	}
 	
@@ -82,20 +97,24 @@ public class AuthenticationController {
 		mv.clear();
 		if(emailCheck==false) {
 			mv.addObject("emailError","Please Enter Valid Email");
+			logger.info("Invaild Email Error");
 		}
 		if(passwordCheck==false) {
 			mv.addObject("passwordError","Please Use Strong Password");
+			logger.info("Invalid Password Error");
 		}
 		
-		if(userinterface.checkUserMail(email)==true && emailCheck==true && passwordCheck==true) {
+		if(userInterface.checkUserMail(email)==true && emailCheck==true && passwordCheck==true) {
 			HttpSession session = req.getSession();
 			session.setAttribute("name", name);
 			session.setAttribute("email", email);			
-			userinterface.addUser(name,email,password);
+			userInterface.addUser(name,email,password);
+			logger.info("User Signed Up succesfull");
 			return new ModelAndView("redirect:/user/enrollcourse");
 		}
-		if(userinterface.checkUserMail(email)==false) {
+		if(userInterface.checkUserMail(email)==false) {
 			mv.addObject("emailError","Email Already Exists, Try Login!");
+			logger.info("Email Already Exists Error");
 
 		}
 		return mv;
@@ -108,9 +127,10 @@ public class AuthenticationController {
 		try {
 			HttpSession session = request.getSession(false);
 			session.invalidate();
-			response.sendRedirect("/WeLearn/");
+			logger.info("User logged out");
+			response.sendRedirect("/WeLearn/login");
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.warning(e.getMessage());
 		}
 	}
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,14 +34,17 @@ import com.welearn.model.User;
 
 @Controller
 public class CourseController {
+	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
 	@Autowired
-	private CourseInterface courseinterface;
+	private CourseInterface courseInterface;
 	
 	@GetMapping("/user/enrollcourse")
 	public ModelAndView enrollcourse() {
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("courses", courseinterface.getAllCourses());
+		mv.addObject("courses", courseInterface.getAllCourses());
 		mv.setViewName("/user/enrollcourse");
+		logger.info("Displayed Enroll-Course Page");
 		return mv;
 	}
 	
@@ -63,18 +67,19 @@ public class CourseController {
 			String chapters = req.getParameter("chapters");
 			String description = req.getParameter("courseDescription");		
 			String email = (String) session.getAttribute("email");
-			boolean isNameAvailable = courseinterface.checkCourseName(name);
+			boolean isNameAvailable = courseInterface.checkCourseName(name);
 			if(isNameAvailable==true) {
-				boolean isAdded = courseinterface.addCourse(name, price, description, chapters, email);
+				boolean isAdded = courseInterface.addCourse(name, price, description, chapters, email);
 				if(isAdded) {
 					
 					ModelAndView mv = new ModelAndView("redirect:/user/add-course-success");
+					logger.info("New Course Added");
 					mv.addObject("courseTitle",name);
 					return mv;
 
 				}
 				else {
-					System.out.println("not added");
+					logger.info("New Course Not Added");
 					return new ModelAndView("redirect:/user/add-course");
 				}
 
@@ -82,14 +87,14 @@ public class CourseController {
 			else {
 				ModelAndView mv = new ModelAndView();
 				mv.setViewName("/user/addCourse");
-				System.out.println("not added e");
+				logger.info("course name not available error");
 				mv.addObject("courseNameError","Course Name not available, Try some unique name");
 				return mv;
 				
 			}
 						
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.warning(e.getMessage());
 			ModelAndView mv = new ModelAndView();
 			return mv;
 		}
@@ -102,6 +107,7 @@ public class CourseController {
 	public ModelAndView showAddCourseConfirmPage() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/user/addCourseSuccess");
+		logger.info("Displayed Course Added Sucess page");
 		return mv;
 	}
 	
@@ -109,7 +115,7 @@ public class CourseController {
 	public ModelAndView showCourseDetails(@PathVariable String name) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/user/courseDetails");
-		mv.addObject("course", courseinterface.getCourseDetails(name));
+		mv.addObject("course", courseInterface.getCourseDetails(name));
 		
 		return mv;
 	}

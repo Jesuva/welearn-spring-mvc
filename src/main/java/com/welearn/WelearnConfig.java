@@ -1,6 +1,7 @@
 package com.welearn;
 
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,10 @@ public class WelearnConfig {
 		return vr;
 	}
 	
-	
-	
 	@Autowired
 	Environment environment;
+	
+	
 
 	private final String URL = "url";
 	private final String USER = "dbuser";
@@ -43,9 +44,9 @@ public class WelearnConfig {
 		driverManagerDataSource.setUsername(environment.getProperty(USER));
 		driverManagerDataSource.setPassword(environment.getProperty(PASSWORD));
 		driverManagerDataSource.setDriverClassName(environment.getProperty(DRIVER));
-		System.out.println(driverManagerDataSource);
 		return driverManagerDataSource;
 	}
+
 	
 	
 }

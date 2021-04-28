@@ -18,7 +18,7 @@
 <form action="login" method="post" class="form-control">
 	<table>
 	<tr>
-	<td>	<label>Email</label> </td>
+	<td>	<label>Email </label> </td>
 	<td><input type="email" name="userMail"  required/></td>
 	</tr>
 	<tr>
