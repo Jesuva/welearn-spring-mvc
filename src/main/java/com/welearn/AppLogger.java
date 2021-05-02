@@ -16,7 +16,7 @@ public class AppLogger {
 		logger.setLevel(Level.ALL);
 		try {
 			ConsoleHandler ch = new ConsoleHandler();
-			ch.setLevel(Level.WARNING);
+			ch.setLevel(Level.ALL);
 			logger.addHandler(ch);
 		}
 		catch(Exception e) {

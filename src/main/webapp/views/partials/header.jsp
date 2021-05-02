@@ -1,7 +1,7 @@
 
 <div class="topnav">
   <a style="font-size:24px;"><span style="color:red">We</span>Learn</a>
-  <a href="/WeLearn/logout" style="float:right">Logout</a>
+  <a href="/welearn/logout" style="float:right">Logout</a>
   <a class="active" style="float:right;">Hey!,${sessionScope.name}</a>
 </div>
 

@@ -11,9 +11,9 @@
 <body>
 <%@ include file="../partials/header.jsp" %>
 <div class="container">
-<h3 class="title">Available Courses</h3>
+<h3 class="title">Course Created By You</h3>
 <c:if test="${not empty courses }">
-<form action="course-enroll" method="post">
+<form action="update-course" method="get">
 <table style="margin:auto;">
 <tr>
 <th>Si.No</th>
@@ -30,21 +30,18 @@
 <td>${course.description }</td>
 <td>${course.chapters }</td>
 <td>${course.price }</td>
-<td><a href="../user/${course.courseId }">View Details</a></td>
-<td><button type="submit" name="selectedCourse" value="${course.courseId }">Enroll</button></td>
+<td><a href="../user/${course.name }">View Details</a></td>
+<td><button type="submit" name="selectedCourse" value="${course.courseId }">Edit</button></td>
 </tr>
 </c:forEach>
 </table>
 </form>
 </c:if>
-<c:if test="${empty courses }">
-<h2 class="title">No Courses Available at this Time!Please Come Back Later!</h2>
+<c:if test="${empty courses}">
+   <h3 class="title">You have not created a course yet!</h3>
 </c:if>
-<div style="margin-top:20px;">
-<a href="../user/view-course-created-by-you" style="float:right;margin-left:10px;"><button>View Courses Created By You</button></a>
-<a href="enrolled-courses" style="float:right;"><button>View Enrolled Courses</button></a>
-<a href="add-course" style="float:right;margin-right:10px;"><button>Add Course</button></a>
-</div>
+
+<a href="enrollcourse" style="float:right;margin-right:10px;"><button>Back</button></a>
 </div>
 
 <br><br>

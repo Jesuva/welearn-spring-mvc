@@ -128,7 +128,7 @@ public class AuthenticationController {
 			HttpSession session = request.getSession(false);
 			session.invalidate();
 			logger.info("User logged out");
-			response.sendRedirect("/WeLearn/login");
+			response.sendRedirect("/welearn/login");
 		} catch (IOException e) {
 			logger.warning(e.getMessage());
 		}

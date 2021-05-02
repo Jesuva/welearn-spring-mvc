@@ -26,21 +26,20 @@ stick to our policy of letting the user to choose their levels!</p>
 </tr>
 <tr>
 <td><label>Chapters</label></td>
-<td><input type="text" name="chapters" required></td>
+<td><input type="number" min="1" name="chapters" required></td>
 </tr>
 <tr>
 <td><label>Price</label></td>
-<td><input type="text" name="price" required></td>
+<td><input type="number" min="100" name="price" required></td>
 </tr>
 <tr>
 <td><label>Course Description</label></td>
 <td><textarea style="resize:none" name="courseDescription" required></textarea></td>
 </tr>
 </table>
-<input type="submit" value="Add Course">
+<input type="submit" value="Add Course" style="margin-left:25%;">
 </form>
-<a href="/DWP/admin/view-course" style="float:right;margin-left:10px;"><button>View Courses Created By You</button></a>
-<a href="../user/enrollcourse" style="float:right;"><button>Back to Dashboard</button></a>
+<a href="../user/enrollcourse" style="float:right;"><button>Back</button></a>
 </div>
 </body>
 </html>

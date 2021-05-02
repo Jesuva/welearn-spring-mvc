@@ -14,10 +14,10 @@
 <div class="container">
 <h2 class="title">WeLearn</h2>
 <div class="confirm-course-container">
-<h4>Thanks for Adding New Course!</h4>
+<h4>${thankMessage}</h4>
 <h3>Hi ${sessionScope.name } !<br>
-Thanks for adding a new course titled as " ${param.courseTitle } "!</h3>
-<h1>Happy Teaching!</h1>
+Thanks for ${actionMessage } titled as " ${courseTitle } "!</h3>
+<h1>Happy ${learnOrTeach} !</h1>
 <a href="/welearn/user/add-course"><button>Back To Add course</button></a>
 <a href="../user/enrollcourse"><button>View All Course</button></a>
 </div>

@@ -19,7 +19,7 @@
 
 <h3>Course Description :  ${course.description } </h3>
 <h3>Happy Learning!</h3>
-<a href="/WeLearn/user/enrollcourse"><button>Back To course</button></a>
+<a href="enrollcourse"><button>Back To course</button></a>
 </div>
 </div>
 
