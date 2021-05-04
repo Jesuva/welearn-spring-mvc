@@ -13,10 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.ContextLoader;
 import org.springframework.web.servlet.ModelAndView;
 import com.welearn.dao.UserInterface;
 import com.welearn.AppLogger;
@@ -24,7 +22,6 @@ import com.welearn.model.Login;
 import com.welearn.model.User;
 
 import jakarta.validation.Valid;
-import jdk.internal.org.jline.utils.Log;
 @Controller
 public class AuthenticationController {
 	
@@ -85,8 +82,10 @@ public class AuthenticationController {
 		String password = req.getParameter("password");
 		System.out.println(br.hasErrors());
 		ModelAndView mv = new ModelAndView();
-		boolean emailCheck = Pattern.matches("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$",email);
-		boolean passwordCheck = Pattern.matches("^(?=.*[a-z]{2})(?=.*[A-Z]{2})(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]{2}).{6,20}$", password);
+//		boolean emailCheck = Pattern.matches("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$",email);
+//		boolean passwordCheck = Pattern.matches("^(?=.*[a-z]{2})(?=.*[A-Z]{2})(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]{2}).{6,20}$", password);
+		boolean emailCheck = true;
+		boolean passwordCheck = true;
 		mv.clear();
 		if(emailCheck==false) {
 			mv.addObject("emailError","Please Enter Valid Email");
