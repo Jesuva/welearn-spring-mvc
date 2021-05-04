@@ -69,9 +69,20 @@
 
 </dependencies>
 
-  <build>
-    <finalName>WeLearn</finalName>
-  </build>  
+ 	<build>
+ 	<finalName>WeLearn</finalName>
+    <plugins>
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>appengine-maven-plugin</artifactId>
+        <version>2.2.0</version>
+        <configuration>
+          <version>1</version>
+          <projectId>GCLOUD_CONFIG</projectId>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
   <version>0.0.1-SNAPSHOT</version>
 </project>
 
