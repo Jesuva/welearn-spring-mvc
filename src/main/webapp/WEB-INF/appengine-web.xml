@@ -1,5 +1,0 @@
-<appengine-web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
-<version>1</version>
-<threadsafe>true</threadsafe>
-<runtime>java11</runtime>
-</appengine-web-app>
