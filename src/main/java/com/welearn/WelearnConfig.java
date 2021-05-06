@@ -47,8 +47,4 @@ public class WelearnConfig {
 		return driverManagerDataSource;
 	}	
 	
-	@Bean
-	public DefaultServletHttpRequestHandler defaultServletHttpRequestHandler() {
-	  return new DefaultServletHttpRequestHandler();
-	}
 }

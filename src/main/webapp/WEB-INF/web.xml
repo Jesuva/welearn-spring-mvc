@@ -1,7 +1,6 @@
 <web-app>
 
   <display-name>WeLearn</display-name>
-  <mvc:default-servlet-handler />
 
 	
 </web-app>
