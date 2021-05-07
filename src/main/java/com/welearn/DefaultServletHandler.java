@@ -11,7 +11,7 @@ public class DefaultServletHandler extends WebMvcConfigurerAdapter {
 	@Override
     public void configureDefaultServletHandling(
             DefaultServletHandlerConfigurer configurer) {
-        configurer.enable();
+        configurer.enable("MyWebInitializer");
     }
 
 }
